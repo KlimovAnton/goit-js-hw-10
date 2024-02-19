@@ -1,0 +1,43 @@
+:root {
+    --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    --animation-duration: 250ms;
+  }
+  
+.timer {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  gap: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.value {
+  font-size: 40px;
+}
+
+.label {
+  font-size: 20px;
+}
+
+label {
+  font-size: 20px;
+}
+
+legend {
+  font-size:20px;
+}
+
+input[type="number"] {
+  width:100%;
+}
+
+.form {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap:15px;
+}
