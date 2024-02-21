@@ -19,9 +19,10 @@ flatpickr("#datetime-picker", {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if(this.now.getTime() > selectedDates[0].getTime()) {
-      iziToast.warning({
+      iziToast.error({
+        message: '❌ Please choose a date in the future',
+        icon: '',
         position: 'topRight',
-        message: '"Please choose a date in the future"',
     });
       refs.btnStart.setAttribute('disabled', 'disabled')
     } else {
@@ -61,15 +62,15 @@ class Timer {
     const hour = minute * 60;
     const day = hour * 24;
   
-    const days = this.pad(Math.floor(ms / day));
-    const hours = this.pad(Math.floor((ms % day) / hour));
-    const minutes = this.pad(Math.floor(((ms % day) % hour) / minute));
-    const seconds = this.pad(Math.floor((((ms % day) % hour) % minute) / second));
+    const days = this.addLeadingZero(Math.floor(ms / day));
+    const hours = this.addLeadingZero(Math.floor((ms % day) / hour));
+    const minutes = this.addLeadingZero(Math.floor(((ms % day) % hour) / minute));
+    const seconds = this.addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
   
     return { days, hours, minutes, seconds };
   }
   
-  pad(value) {
+  addLeadingZero(value) {
     return String(value).padStart(2, "0")
   }
 }

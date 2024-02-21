@@ -1,17 +1,20 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-const refs = {
-    inputDelay: document.querySelector('.input-delay-js'),
-    inputFulfilled: document.querySelector('.input-fulfilled-js'),
-    inputRejected: document.querySelector('.input-rejected-js'),
-    btnCreate: document.querySelector('button')
-}
+const formElement = document.querySelector('.form')
 
-refs.btnCreate.addEventListener('click', handleStart)
+formElement.addEventListener('submit', handleStart)
 function handleStart(event) {
-    onPromise().then(onResolved).catch(onRejected)
     event.preventDefault();
+    
+    const form = event.currentTarget
+    const delay = form.elements['delay'].value
+    const inputFulfilled = form.elements.state.value
+    form.reset()
+
+    onPromise(delay, inputFulfilled)
+        .then(onResolved)
+        .catch(onRejected)
 }
 
 function onResolved(delay) {
@@ -30,22 +33,13 @@ function onRejected(delay) {
     });
 }
 
-function onPromise() {
-    const delay = refs.inputDelay.value
-    const inputFulfilled = refs.inputFulfilled.checked
-    const inputRejected = refs.inputRejected.checked
-    
-    refs.inputRejected.checked = false;
-    refs.inputFulfilled.checked = false;
-    refs.inputDelay.value = '';
-    return new Promise((res, rej) => {
+function onPromise(delay, inputFulfilled) {
+    return new Promise((onResolved, onRejected) => {
         setTimeout(() => {
-            if(inputFulfilled) {
-                res(delay)
-                
-            } else if (inputRejected) {
-                rej(delay)
-                
+            if(inputFulfilled === 'fulfilled') {
+                onResolved(delay)
+            } else {
+                onRejected(delay)
             }
         }, delay);
     })
