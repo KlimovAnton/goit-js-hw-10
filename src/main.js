@@ -31,6 +31,7 @@ async function handleSearchImg(event) {
   curentSearch = inputEL.value;
   galleryListEl.innerHTML = '';
   loadMoreImgBtn.classList.add('hidden');
+  const data = await getImages(loadPageImg, curentSearch);
 
   if (inputEL.value.trim() === '') {
     loadMoreImgBtn.classList.add('hidden');
@@ -53,13 +54,20 @@ async function handleSearchImg(event) {
       formSearchImg.reset();
       return;
     }
-    renderMarkup(data.hits, galleryListEl);
-    loadingBeforeImgEl.classList.remove('loader');
-    loadMoreImgBtn.classList.remove('hidden');
-
-    lightbox.refresh();
+      
+        renderMarkup(data.hits, galleryListEl);
+        if(data.hits.length < 14) {
+          loadMoreImgBtn.classList.add('hidden');
+        } else {
+          loadingBeforeImgEl.classList.remove('loader');
+          loadMoreImgBtn.classList.remove('hidden');
+      
+          lightbox.refresh();
+        }
+  
   } catch (error) {
     showErrorCustom('Something went wrong.Please try later');
+    
   }
   formSearchImg.reset();
 }
