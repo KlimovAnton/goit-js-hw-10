@@ -58,6 +58,7 @@ async function handleSearchImg(event) {
         renderMarkup(data.hits, galleryListEl);
         if(data.hits.length < 14) {
           loadMoreImgBtn.classList.add('hidden');
+          loadingBeforeImgEl.classList.remove('loader');
         } else {
           loadingBeforeImgEl.classList.remove('loader');
           loadMoreImgBtn.classList.remove('hidden');
