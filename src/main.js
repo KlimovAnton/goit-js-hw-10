@@ -59,6 +59,7 @@ async function handleSearchImg(event) {
         if(data.hits.length < 14) {
           loadMoreImgBtn.classList.add('hidden');
           loadingBeforeImgEl.classList.remove('loader');
+          lightbox.refresh();
         } else {
           loadingBeforeImgEl.classList.remove('loader');
           loadMoreImgBtn.classList.remove('hidden');
@@ -68,6 +69,7 @@ async function handleSearchImg(event) {
   
   } catch (error) {
     showErrorCustom('Something went wrong.Please try later');
+    loadingBeforeImgEl.classList.remove('loader');
     
   }
   formSearchImg.reset();
